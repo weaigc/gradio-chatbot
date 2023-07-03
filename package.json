@@ -1,0 +1,53 @@
+{
+  "name": "gradio-chatbot",
+  "version": "0.0.1",
+  "description": "A standalone gradio chatbot base gradio client.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "chatbot": "./dist/bin/cli.js",
+    "gchatbot": "./dist/bin/cli.js"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc -p ./",
+    "test": "tsx ./tests/index",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "weaigc",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "debug": "^4.3.4",
+    "node-html-markdown": "^1.3.0",
+    "semiver": "^1.1.0",
+    "undici": "^5.22.1",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.8",
+    "@types/node": "^20.3.3",
+    "@types/ws": "^8.5.5",
+    "tsx": "^3.12.7",
+    "type-fest": "^3.12.0",
+    "typescript": "^5.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weaigc/gradio-client.git"
+  },
+  "keywords": [
+    "gradio-client",
+    "huggingface",
+    "modelscope",
+    "ai",
+    "llm",
+    "large",
+    "model",
+    "inference"
+  ],
+  "bugs": {
+    "url": "https://github.com/weaigc/gradio-client/issues"
+  },
+  "homepage": "https://github.com/weaigc/gradio-client#readme"
+}
