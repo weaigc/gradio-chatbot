@@ -28,7 +28,7 @@ npm -g gradio-chatbot
 chatbot
 ```
 
-[![asciicast](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr.svg)](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr)
+[![asciicast](./media/demo.gif)](https://asciinema.org/a/0ki5smP795eyXdXGlx53UDmTB)
 
 
 ## 安装
