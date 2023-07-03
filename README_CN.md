@@ -1,7 +1,6 @@
 <div align="center">
-# Gradio Chatbot
 
-English | [中文](README_CN.md)
+# Gradio Chatbot
 
 > 一个可以将 [Huggingface Spaces](https://huggingface.co/spaces)、[魔搭创空间](https://www.modelscope.cn/studios) 及 Gradio ChatBot 自动转成免费 API 的 Npm 包。目前已支持 ChatGPT，Falcon，ChatGLM，百川等众多模型空间。
 
@@ -22,7 +21,12 @@ English | [中文](README_CN.md)
 
 一个命令体验免费的 ChatGPT 聊天机器人。
 
-> npx gradio-chatbot
+```bash
+npx gradio-chatbot
+# or
+npm -g gradio-chatbot
+chatbot
+```
 
 [![asciicast](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr.svg)](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr)
 
