@@ -3,7 +3,6 @@ import type { MergeExclusive } from 'type-fest';
 import Debug from 'debug';
 import assert from 'assert';
 import { client } from './client';
-import type { Event, Status } from './types'
 export * from './config';
 import { spaces } from './config';
 
@@ -22,7 +21,6 @@ type GradioAutoOptions = MergeExclusive<{
   fnIndex?: number;
   args?: unknown[];
   inputIndex?: number;
-  outputIndex?: number;
   session_hash?: string;
   hf_token?: string;
 };
@@ -30,10 +28,10 @@ type GradioAutoOptions = MergeExclusive<{
 type ChatOptions = {
   onMessage?: (msg: string) => void;
   onError?: (error: string) => void;
-  abort?: AbortSignal;
 }
 
 function resolveEndpoint(url: string) {
+  debug('url', url);
   const uri = new URL(url);
   debug('resolve', uri.hostname);
   if (uri.hostname === 'modelscope.cn') {
@@ -77,15 +75,18 @@ export class GradioChatBot {
   private options: GradioAutoOptions;
   history: any[] = [];
   session_hash: string;
+  private instance_map: any;
   constructor(opts: string | GradioAutoOptions = '0') {
     if (typeof opts === 'string') {
       this.options =  { url: opts };
     } else {
       this.options = opts;
     }
-    assert(this.options.endpoint || this.options.url, 'endpoint 和 url 必须要指定其中一个');
+    assert(this.options.endpoint || this.options.url, 'endpoint and url must specify one of them');
     if (!isNaN(this.options.url as any)) {
-      let config: string | GradioAutoOptions = spaces[parseInt(this.options.url!, 10)] || this.options.url!;
+      const index = parseInt(this.options.url!, 10);
+      assert(index < spaces.length, `The model index range is [0 - ${spaces.length - 1}].`)
+      let config: string | GradioAutoOptions = spaces[index];
       if (typeof config === 'string') {
         config = { url: config };
       }
@@ -103,12 +104,9 @@ export class GradioChatBot {
 
   private parseInputs = (fnIndex: number, config: any, skip_text = false) => {
     const { components, dependencies } = config;
-    const chatbot = components.find((com: any) => com.type === 'chatbot' && com.props?.visible);
   
     const submitFn = dependencies[fnIndex];
-    const inputComponents = submitFn?.inputs?.map((inputId: number) => components.find((com: any) => com.id === inputId)) || [];
-    const inputs = inputComponents.map((com: any) => com?.props?.value ?? null);
-    let outputIndex = submitFn?.outputs.indexOf(chatbot?.id);
+    const inputs = submitFn?.inputs.map(id => this.instance_map[id].props.value);
   
     debug('fnIndex', fnIndex);
     let textInputIndex = skip_text ? 0 : submitFn?.inputs.indexOf(submitFn?.targets?.[0]);
@@ -120,12 +118,10 @@ export class GradioChatBot {
         ));
     }
   
-    assert(textInputIndex > -1, '找不到输入框');
-  
-    const historyIndex = submitFn?.inputs.indexOf(chatbot?.id);
-  
-    debug('submit', fnIndex, textInputIndex, outputIndex, historyIndex);
-    return [inputs, textInputIndex, outputIndex, historyIndex];
+    assert(textInputIndex > -1, 'Cannot find the input box');
+
+    debug('inputIndex', textInputIndex);
+    return [inputs, textInputIndex];
   }
 
   async reset() {
@@ -139,103 +135,185 @@ export class GradioChatBot {
       try {
         let { endpoint, fnIndex, args = [], hf_token } = this.options;
 
-        const { config, submit } =
-          await client(endpoint!, { session_hash: this.session_hash, hf_token: hf_token as any, normalise_files: true });
+        const app = await client(endpoint!, { session_hash: this.session_hash, hf_token: hf_token as any, normalise_files: true });
 
-        const { components, dependencies } = config;
+        const { components, dependencies } = app.config;
+        let instance_map = this.instance_map;
+        if (!instance_map) {
+          instance_map = components.reduce((acc, next) => {
+            acc[next.id] = next;
+            return acc;
+          }, {} as { [id: number]: any });
+          this.instance_map = instance_map;
+        }
 
         fnIndex = fnIndex ?? findValidSubmitByType(components, dependencies, 'submit');
         if (fnIndex < 0) {
           fnIndex = Math.max(findValidSubmitByButton(components, dependencies), findValidSubmitByType(components, dependencies, 'click'));
         }
-        assert(fnIndex !== -1, '解析此空间失败');
+        assert(fnIndex !== -1, 'Failed to parse this space, you may need to specify the fnIndex manually!');
 
-        let [inps, inpIndex, outIndex, historyIndex] = this.parseInputs(fnIndex, config);
+        let [inps, inpIndex] = this.parseInputs(fnIndex, app.config);
 
         if (!args?.length) {
           args = inps;
         }
-        let outputIndex = this.options.outputIndex ?? outIndex;
         let inputIndex = this.options.inputIndex ?? inpIndex;
 
         if (inputIndex > -1) {
           args[inputIndex] = prompt;
         }
-        if (historyIndex > -1) {
-          args[historyIndex] = this.history.slice(-this.options.historySize) ?? [];
-        }
 
         debug('args', fnIndex, JSON.stringify(args));
-        let app = submit(fnIndex, args);
-        this.options.fnIndex = fnIndex;
-        while (dependencies[++fnIndex]?.trigger === 'then') {
-          await app;
-          let [inps, _, outIndex] = this.parseInputs(fnIndex, config, true);
-          outputIndex = outIndex;
-          debug('fnIndex', fnIndex, JSON.stringify(inps));
-          app = submit(fnIndex, inps);
+
+        const fn_status = [];
+        let _error_id = -1;
+        let messages: { fn_index: number, type: string, message: string, id: number }[] = [];
+        const MESSAGE_QUOTE_RE = /^'([^]+)'$/;
+        let submit_map: Map<number, ReturnType<typeof app.submit>> = new Map();
+
+        const handle_update = (data: any, fn_index: number) => {
+          const outputs = dependencies[fn_index].outputs;
+          data?.forEach((value: any, i: number) => {
+            const output = instance_map[outputs[i]];
+            output.props.value_is_output = true;
+            if (
+              typeof value === "object" &&
+              value !== null &&
+              value.__type__ === "update"
+            ) {
+              for (const [update_key, update_value] of Object.entries(value)) {
+                if (update_key === "__type__") {
+                  continue;
+                } else {
+                  output.props[update_key] = update_value;
+                }
+              }
+            } else {
+              output.props.value = value;
+              if (process.env.DEBUG) {
+                debug('value', output.type, JSON.stringify(value));
+              }
+              if (output.type === 'chatbot' && value) {
+                this.history = value.slice(-this.options.historySize);
+                output.props.value = this.history;
+                const message = value?.at(-1)?.at(-1);
+                const lastMessage = message ? NodeHtmlMarkdown.translate(message)?.replace?.(/�/g, '').trim() : '';
+                options?.onMessage?.(lastMessage);
+              }
+            }
+          });
         }
 
-        let completed = false;
-        let dataReturned = false;
-        let errorMessage = '';
+        const trigger_api_call = async (
+          dep_index: number,
+          data = null,
+          event_data: unknown = null
+        ) => {
+          let dep = dependencies[dep_index];
+          const current_status = fn_status[dep_index];
 
-        let lastMessage = '';
-        const handleData = (event: Event<'data'>) => {
-          dataReturned = true;
-          const { data = [] } = event || {};
-          debug(outputIndex, JSON.stringify(data));
-          if (outputIndex === -1) {
-            outputIndex = data.findIndex((row: any) => JSON.stringify(row).indexOf('<') > -1);
+          messages = messages.filter(({ fn_index }) => fn_index !== dep_index);
+          if (dep.cancels) {
+            await Promise.all(
+              dep.cancels.map(async (fn_index) => {
+                const submission = submit_map.get(fn_index);
+                submission?.cancel();
+                return submission;
+              })
+            );
           }
-          this.history = (data?.at(outputIndex) ?? []) as any[];
-          const message = traverseContent(this.history);
-          if (errorMessage) {
-            options?.onError?.(errorMessage);
+      
+          if (current_status === "pending" || current_status === "generating") {
+            return;
+          }
+      
+          let payload = {
+            fn_index: dep_index,
+            data: data || dep.inputs.map((id) => instance_map[id].props.value),
+            event_data: dep.collects_event_data ? event_data : null
+          };
+          const make_prediction = () => {
+            const submission = app.submit(payload.fn_index, payload.data as unknown[], payload.event_data)
+              .on("data", ({ data, fn_index }) => {
+                handle_update(data, fn_index);
+              })
+              .on("status", ({ fn_index, ...status }) => {
+                fn_status[fn_index] = status.stage;
+                debug('status', status.stage);
+                if (status.stage === "complete") {
+                  let end = true;
+                  dependencies.map(async (dep, i) => {
+                    if (dep.trigger_after === fn_index) {
+                      end = false;
+                      trigger_api_call(i);
+                    }
+                  });
+      
+                  submission.destroy();
+                  if (end) {
+                    const message = this.history?.at(-1)?.at(-1);
+                    const lastMessage = message ? NodeHtmlMarkdown.translate(message)?.replace?.(/�/g, '').trim() : '';
+                    resolve(lastMessage);
+                  }
+                }
+      
+                if (status.stage === "error") {
+                  if (status.message) {
+                    const _message = status.message.replace(
+                      MESSAGE_QUOTE_RE,
+                      (_, b) => b
+                    );
+                    messages = [
+                      {
+                        type: "error",
+                        message: _message,
+                        id: ++_error_id,
+                        fn_index
+                      },
+                      ...messages
+                    ];
+                  }
+
+                  dependencies.map(async (dep, i) => {
+                    if (
+                      dep.trigger_after === fn_index &&
+                      !dep.trigger_only_on_success
+                    ) {
+                      trigger_api_call(i);
+                    }
+                  });
+                  options?.onError?.(status.message || 'error');
+                  reject(status.message || 'error');
+                  submission.destroy();
+                }
+              });
+      
+            submit_map.set(dep_index, submission);
+          }
+          if (dep.frontend_fn) {
+            dep
+              .frontend_fn(
+                payload.data.concat(
+                  dep.outputs.map((id) => instance_map[id].props.value)
+                )
+              )
+              .then((v: []) => {
+                if (dep.backend_fn) {
+                  payload.data = v;
+                  make_prediction();
+                } else {
+                  handle_update(v, dep_index);
+                }
+              });
           } else {
-            lastMessage = message ? NodeHtmlMarkdown.translate(message)?.replace?.(/�/g, '').trim() : '';
-            options?.onMessage?.(lastMessage);
-          }
-          if (completed) {
-            app.destroy();
-          }
-        };
-
-        const handleStatus = (event: Status & Event<'status'>) => {
-          // @ts-ignore
-          const status = event.stage || event.status;
-          debug('response status', status);
-          if (status === 'error') {
-            if (completed) return;
-            completed = true;
-            errorMessage = event.message || status;
-            debug('error message', errorMessage);
-            reject(errorMessage);
-          } else if (status === 'complete') {
-            debug('complete');
-            completed = true;
-            resolve(lastMessage);
-            Object.assign(this.options, {
-              args,
-              inputIndex,
-              outputIndex,
-            });
-    
-            if (dataReturned) {
-              app.destroy();
+            if (dep.backend_fn) {
+              make_prediction();
             }
           }
-        };
+        }
 
-        app.on("status", handleStatus);
-        app.on("data", handleData);
-
-        options?.abort?.addEventListener('abort', () => {
-          debug('abort signal', options?.abort?.reason);
-          app.cancel();
-          app.destroy();
-          reject(options?.abort?.reason || 'canceled');
-        });
+        trigger_api_call(fnIndex, args);
       } catch (e) {
         reject(e);
       }

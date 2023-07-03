@@ -4,10 +4,11 @@ import * as readline from 'node:readline/promises'
 import { stdin as input, stdout as output } from 'node:process'
 import { GradioChatBot } from '../';
 
-const bot = new GradioChatBot(); // Default Space: yuntian-deng/ChatGPT
+const model = process.argv[2] || '0';
+const bot = new GradioChatBot(model);
 
 class Spinner {
-  tick: number = 900;
+  tick: number = 300;
   processing = false;
   index = 0;
   tid: any;
@@ -60,13 +61,11 @@ export async function cli() {
   const rl = readline.createInterface({ input, output });
   let lastLength = 0;
   const spinner = new Spinner();
-  spinner.start();
   while (true) {
-    spinner.setMode('input');
     const prompt = await rl.question('Man: ');
 
     if (!prompt.trim()) break;
-    spinner.setMode('output');
+    spinner.start();
     spinner.write('Bot: ');
 
     const response = await bot.chat(prompt, {
@@ -78,8 +77,8 @@ export async function cli() {
     spinner.write(response.slice(lastLength));
     lastLength = 0;
     spinner.write('\n');
+    spinner.stop();
   }
-  spinner.stop();
   rl.close();
 }
 

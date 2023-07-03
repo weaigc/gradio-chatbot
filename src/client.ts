@@ -1,4 +1,5 @@
 import semiver from "semiver";
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import type { Config } from "./types";
 
 import {
@@ -31,9 +32,10 @@ import { Blob } from "node:buffer";
 
 const { HTTP_PROXY, HTTPS_PROXY, http_proxy, https_proxy } = process.env;
 const proxy = HTTP_PROXY || HTTPS_PROXY || http_proxy || https_proxy;
+let agent: HttpsProxyAgent<string>;
 if (proxy) {
-  const agent = new ProxyAgent(proxy);
-  setGlobalDispatcher(agent);
+  setGlobalDispatcher(new ProxyAgent(proxy));
+  agent = new HttpsProxyAgent(proxy);
 }
 
 declare global {
@@ -467,7 +469,7 @@ export async function client(
 						url.searchParams.set("__sign", jwt);
 					}
 					// @ts-ignore
-					websocket = new WebSocket(url);
+					websocket = new WebSocket(url, { agent });
 
 					websocket.onclose = (evt) => {
 						if (!evt.wasClean) {
