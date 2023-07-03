@@ -22,7 +22,7 @@ English | [中文](README_CN.md)
 
 一个命令体验免费的 ChatGPT 聊天机器人。
 
-> npx chatbot
+> npx gradio-chatbot
 
 [![asciicast](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr.svg)](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr)
 

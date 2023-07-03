@@ -1,6 +1,6 @@
 {
   "name": "gradio-chatbot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A standalone gradio chatbot base gradio client.",
   "main": "index.js",
   "engines": {

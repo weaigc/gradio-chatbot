@@ -1,4 +1,5 @@
 <div align="center">
+
 # Gradio Chatbot
 
 >  An Npm package that can automatically convert [Huggingface Spaces](https://huggingface.co/spaces), [Modelscope Studios](https://www.modelscope.cn/studios) and Gradio ChatBot into free APIs. Currently supports ChatGPT, Falcon Chat, ChatGLM, Baichuan 7B and many other model spaces.
@@ -21,7 +22,7 @@
 
 Experience a free ChatGPT chatbot with just one command.
 
-> npx chatbot
+> npx gradio-chatbot
 
 [![asciicast](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr.svg)](https://asciinema.org/a/Wredv7MMQ0Q1MJoiLW1t5rDHr)
 
@@ -36,7 +37,7 @@ npm install gradio-chatbot
 yarn add gradio-chatbot
 ```
 
-## 使用
+## Usage
 In addition to using it in the CLI, you can also import the NPM package for further development.
 ```ts
 import { GradioChatBot } from 'gradio-chatbot'
