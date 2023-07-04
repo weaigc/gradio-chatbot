@@ -24,7 +24,7 @@
 ```bash
 npx gradio-chatbot
 # or
-npm -g gradio-chatbot
+npm install -g gradio-chatbot
 chatbot
 # 更多用法请输入 chatbot help
 ```

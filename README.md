@@ -25,7 +25,7 @@ Experience a free ChatGPT chatbot with just one command.
 ```bash
 npx gradio-chatbot
 # or
-npm -g gradio-chatbot
+npm install -g gradio-chatbot
 chatbot
 # For more usage, please input chatbot help
 ```
