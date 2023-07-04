@@ -126,6 +126,7 @@ export class GradioChatBot {
 
   async reset() {
     this.history = [];
+    this.instance_map = null;
     this.session_hash = generateHash();
   }
 
