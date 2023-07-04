@@ -103,12 +103,13 @@ start();
 3 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground
 4 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
 5 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
-6 | Huggingface Spaces | Vicuna 13b | https://chat.lmsys.org/
+6 | Huggingface Spaces | Vicuna 13b (此模型国内不可访问，请配置代理后使用) | https://chat.lmsys.org/
 7 | Huggingface Spaces | Vicuna GGML 模型，速度较慢，不推荐 | https://huggingface.co/spaces/justest/vicuna-ggml
 8 | 魔搭 | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
 9 | 魔搭 | 姜子牙V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
 10 | 魔搭 | 达魔院出品的角色对话机器人 | https://modelscope.cn/studios/damo/role_play_chat/summary
 
+> 国内访问推荐使用魔搭社区提供的模型，访问速度更快更稳定。
 > 更多好用模型欢迎在 [issue](https://github.com/weaigc/gradio-chatbot/issues) 区提交贡献。
 
 
