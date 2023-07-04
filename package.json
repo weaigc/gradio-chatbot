@@ -1,7 +1,7 @@
 {
   "name": "gradio-chatbot",
-  "version": "0.0.3",
-  "description": "A standalone gradio chatbot base gradio client.",
+  "version": "0.0.4",
+  "description": "An npm package that can automatically convert huggingface and modelscope spaces to free API.",
   "main": "index.js",
   "engines": {
     "node": ">=18"

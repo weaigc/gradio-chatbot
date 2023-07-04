@@ -2,10 +2,7 @@
 
 import * as readline from 'node:readline/promises'
 import { stdin as input, stdout as output } from 'node:process'
-import { GradioChatBot } from '../';
-
-const model = process.argv[2] || '0';
-const bot = new GradioChatBot(model);
+import { GradioChatBot, spaces } from '../';
 
 class Spinner {
   tick: number = 300;
@@ -57,14 +54,59 @@ class Spinner {
   }
 }
 
+class RL {
+  rl: ReturnType<typeof readline.createInterface>;
+  constructor(readonly options: Parameters<typeof readline.createInterface>[0]) {
+    this.rl = readline.createInterface(options);
+  }
+  async question(prompt: string) {
+    this.rl.setPrompt(prompt);
+    this.rl.prompt(true);
+    const lines = [];
+    let closeTid: NodeJS.Timeout;
+    for await (const input of this.rl) {
+      clearTimeout(closeTid);
+      closeTid = setTimeout(() => {
+        if (input === '') {
+          process.stdout.write('\n');
+        }
+        this.close();
+      }, 500);
+      lines.push(input);
+    }
+    return lines.join('\n');
+  }
+  close() {
+    this.rl?.close();
+    this.rl = null;
+  }
+}
+
 export async function cli() {
-  const rl = readline.createInterface({ input, output });
+  const model = process.argv[2] || '0';
+  if (!/^https?:\/\//.test(model) && !spaces[model]) {
+    process.stdout.write(`> An tool that can automatically convert huggingface and modelscope spaces to free API.
+
+Usage:
+npx gradio-chatbot
+npx gradio-chatbot Index
+npx gradio-chatbot URL
+
+`);
+    process.stdout.write('Index\tSpaces URL\n');
+    process.stdout.write(spaces.map((space, index) => `${index}\t${(space as any)?.url || space}`).join('\n'));
+    process.stdout.write(`
+
+More information: https://github.com/weaigc/gradio-chatbot
+`)
+    return;
+  }
+  const bot = new GradioChatBot(model);
+
   let lastLength = 0;
   const spinner = new Spinner();
   while (true) {
-    const prompt = await rl.question('Man: ');
-    console.log('pppp', prompt, 'eeee');
-
+    const prompt = await new RL({ input, output }).question('Man: ');
     if (!prompt.trim()) break;
     spinner.start();
     spinner.write('Bot: ');
@@ -80,7 +122,6 @@ export async function cli() {
     spinner.write('\n');
     spinner.stop();
   }
-  rl.close();
 }
 
 cli();

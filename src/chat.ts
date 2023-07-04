@@ -3,8 +3,8 @@ import type { MergeExclusive } from 'type-fest';
 import Debug from 'debug';
 import assert from 'assert';
 import { client } from './client';
-export * from './config';
-import { spaces } from './config';
+import spaces from './spaces.json';
+export { spaces };
 
 const debug = Debug('gradio-chatbot');
 
