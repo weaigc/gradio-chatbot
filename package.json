@@ -1,8 +1,8 @@
 {
   "name": "gradio-chatbot",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An npm package that can automatically convert huggingface and modelscope spaces to free API.",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "engines": {
     "node": ">=18"
   },
