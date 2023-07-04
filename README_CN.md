@@ -60,14 +60,17 @@ async function start() {
 start();
 ```
 
-你也可以把你想要转换的空间地址输入进去，如 RWKV。
+你也可以把你想要转换的空间地址输入进去，如 https://huggingface.co/spaces/h2oai/h2ogpt-chatbot
 ```ts
 import { GradioChatBot } from 'gradio-chatbot'
 
-const bot = new GradioChatBot('https://huggingface.co/spaces/BlinkDL/ChatRWKV-gradio'); // 调用自定义 ChatBot 模型
+const bot = new GradioChatBot({
+  url: 'https://huggingface.co/spaces/h2oai/h2ogpt-chatbot',
+  fnIndex: 35,
+}); // 调用自定义 ChatBot 模型
 
 async function start() {
-  console.log(await bot.chat('Tell me about ravens.'));
+  console.log(await bot.chat('Hello'));
 }
 
 start();

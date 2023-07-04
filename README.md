@@ -62,16 +62,18 @@ async function start() {
 start();
 ```
 
-You can also input the spatial address you want to convert, such as RWKV.
+You can also input the spatial address you want to convert, such as https://huggingface.co/spaces/h2oai/h2ogpt-chatbot.
 ```ts
 import { GradioChatBot } from 'gradio-chatbot'
 
-const bot = new GradioChatBot('https://huggingface.co/spaces/BlinkDL/ChatRWKV-gradio');
-async function start() {
-  console.log(await bot.chat('Tell me about ravens.'));
-}
+const bot = new GradioChatBot({
+  url: 'https://huggingface.co/spaces/h2oai/h2ogpt-chatbot',
+  fnIndex: 35,
+}); // 调用自定义 ChatBot 模型
 
-start();
+async function start() {
+  console.log(await bot.chat('Hello'));
+}
 ```
 
 In addition, the NPM package has built-in support for 10 popular spaces from [Hugging Face Spaces](https://huggingface.co/spaces) and [Modelscope Studios](https://www.modelscope.cn/studios). You can directly use the model index to access them. Please refer to the [Model List](#model-list) for more details.
