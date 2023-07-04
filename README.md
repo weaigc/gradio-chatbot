@@ -2,7 +2,7 @@
 
 # Gradio Chatbot
 
->  An Npm package that can automatically convert [Huggingface Spaces](https://huggingface.co/spaces), [Modelscope Studios](https://www.modelscope.cn/studios) and Gradio ChatBot into free APIs. Currently supports ChatGPT, Falcon Chat, ChatGLM, Baichuan 7B and many other model spaces.
+>  An Npm package that can automatically convert [Huggingface Spaces](https://huggingface.co/spaces), [Modelscope Studios](https://www.modelscope.cn/studios) and Gradio ChatBot into free APIs. It basically supports any space with a chatbot, and currently perfectly supports many model spaces such as ChatGPT, Vicuna, MPT-30B, Falcon, ChatGLM and so on.
 
 English | [中文](README_CN.md)
 

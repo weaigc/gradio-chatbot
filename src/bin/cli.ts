@@ -63,6 +63,7 @@ export async function cli() {
   const spinner = new Spinner();
   while (true) {
     const prompt = await rl.question('Man: ');
+    console.log('pppp', prompt, 'eeee');
 
     if (!prompt.trim()) break;
     spinner.start();

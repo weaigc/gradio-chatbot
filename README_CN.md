@@ -2,7 +2,7 @@
 
 # Gradio Chatbot
 
-> 一个可以将 [Huggingface Spaces](https://huggingface.co/spaces)、[魔搭创空间](https://www.modelscope.cn/studios) 及 Gradio ChatBot 自动转成免费 API 的 Npm 包。目前已支持 ChatGPT，Falcon，ChatGLM，百川等众多模型空间。
+> 一个可以将 [Huggingface Spaces](https://huggingface.co/spaces)、[魔搭创空间](https://www.modelscope.cn/studios) 及 Gradio ChatBot 自动转成免费 API 的 Npm 包。理论上支持所有带 chatbot 的空间，目前完美支持了 ChatGPT，Vicuna，MPT-30B，Falcon，ChatGLM 等众多模型空间。
 
 [![NPM](https://img.shields.io/npm/v/gradio-chatbot.svg)](https://www.npmjs.com/package/gradio-chatbot)
 [![Apache 2.0 License](https://img.shields.io/github/license/saltstack/salt)](https://github.com/weaigc/gradio-chatbot/blob/main/license)
