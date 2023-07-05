@@ -26,8 +26,10 @@ Experience a free ChatGPT chatbot with just one command.
 npx gradio-chatbot
 # or
 npm install -g gradio-chatbot
-chatbot
-# For more usage, please input chatbot help
+# call the default model
+chatbo
+# show help
+chatbot help
 ```
 
 [![asciicast](./media/demo.gif)](https://asciinema.org/a/0ki5smP795eyXdXGlx53UDmTB)
