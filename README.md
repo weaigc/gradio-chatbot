@@ -27,7 +27,7 @@ npx gradio-chatbot
 # or
 npm install -g gradio-chatbot
 # call the default model
-chatbo
+chatbot
 # show help
 chatbot help
 ```
