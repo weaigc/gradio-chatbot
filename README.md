@@ -13,6 +13,7 @@ English | [中文](README_CN.md)
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Usage](#usage)
+- [API Document](#api-document)
 - [Model List](#model-list)
 - [Compatibility](#compatibility)
 - [Credits](#credits)
@@ -95,6 +96,10 @@ For more examples, please visit the directory: [Examples](./examples/) .
 
 > Note: Some models on Hugging Face may collect the information you input. If you have data security concerns, it is recommended not to use them, and using self-hosted models is a better choice.
 
+## API Document
+
+See [API Document](./API.md)
+
 ## Model List
 
 Index | Type | Description | Model
@@ -106,7 +111,7 @@ Index | Type | Description | Model
 4 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
 5 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
 6 | Huggingface Spaces | Vicuna 13b | https://chat.lmsys.org/
-7 | Huggingface Spaces | Vicuna GGML, the model has slow speed and is not recommended for use. | https://huggingface.co/spaces/justest/vicuna-ggml
+7 | Huggingface Spaces | Jiang Ziya V1 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
 8 | ModelScope | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
 9 | ModelScope | Jiang Ziya V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
 10 | ModelScope | Character Dialogue Chatbot developed by Alibaba DAMO Academy | https://modelscope.cn/studios/damo/role_play_chat/summary

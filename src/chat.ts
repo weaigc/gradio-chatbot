@@ -21,6 +21,7 @@ type GradioAutoOptions = MergeExclusive<{
   fnIndex?: number;
   args?: unknown[];
   inputIndex?: number;
+  parseHtml?: boolean;
   session_hash?: string;
   hf_token?: string;
 };
@@ -53,7 +54,7 @@ const traverseContent = (data: any): any => {
   return traverseContent(data.at(-1));
 }
 
-export const findValidSubmitByType = (components: any[], dependencies: any[], type: string) => {
+const findValidSubmitByType = (components: any[], dependencies: any[], type: string) => {
   const id = components.find(com => com.type === 'button' && com.props.value === 'Submit')?.id;
   let index = dependencies.findIndex(dep => dep.targets?.includes?.(id));
   return index === -1 ? dependencies.findIndex(
@@ -65,7 +66,7 @@ export const findValidSubmitByType = (components: any[], dependencies: any[], ty
   ) : index;
 }
 
-export const findValidSubmitByButton = (components: any[], dependencies: any[]) => {
+const findValidSubmitByButton = (components: any[], dependencies: any[]) => {
   const id = components.find(com => com.type === 'button')?.id;
   if (!id) return -1;
   return dependencies.findIndex(dep => dep.targets?.includes?.(id));
@@ -100,6 +101,8 @@ export class GradioChatBot {
     if (!this.options.historySize) {
       this.options.historySize = 10;
     }
+
+    this.options.parseHtml = this.options.parseHtml !== false;
   }
 
   private parseInputs = (fnIndex: number, config: any, skip_text = false) => {
@@ -124,14 +127,19 @@ export class GradioChatBot {
     return [inputs, textInputIndex];
   }
 
+  private html2Markdown(text: string) {
+    text = this.options.parseHtml ? NodeHtmlMarkdown.translate(text || '') : text;
+    return text?.replace?.(/�/g, '').trim();
+  }
+
   async reset() {
     this.history = [];
     this.instance_map = null;
     this.session_hash = generateHash();
   }
 
-  async chat(prompt: string, options?: ChatOptions): Promise<string> {
-    assert(prompt, 'prompt 不能为空');
+  async chat(input: string, options?: ChatOptions): Promise<string> {
+    assert(input, 'input can\'t be empty!');
     return new Promise(async (resolve, reject) => {
       try {
         let { endpoint, fnIndex, args = [], hf_token } = this.options;
@@ -162,7 +170,7 @@ export class GradioChatBot {
         let inputIndex = this.options.inputIndex ?? inpIndex;
 
         if (inputIndex > -1) {
-          args[inputIndex] = prompt;
+          args[inputIndex] = input;
         }
 
         debug('args', fnIndex, JSON.stringify(args));
@@ -199,8 +207,7 @@ export class GradioChatBot {
                 this.history = value.slice(-this.options.historySize);
                 output.props.value = this.history;
                 const message = value?.at(-1)?.at(-1);
-                const lastMessage = message ? NodeHtmlMarkdown.translate(message)?.replace?.(/�/g, '').trim() : '';
-                options?.onMessage?.(lastMessage);
+                options?.onMessage?.(this.html2Markdown(message));
               }
             }
           });
@@ -254,8 +261,7 @@ export class GradioChatBot {
                   submission.destroy();
                   if (end) {
                     const message = this.history?.at(-1)?.at(-1);
-                    const lastMessage = message ? NodeHtmlMarkdown.translate(message)?.replace?.(/�/g, '').trim() : '';
-                    resolve(lastMessage);
+                    resolve(this.html2Markdown(message));
                   }
                 }
       

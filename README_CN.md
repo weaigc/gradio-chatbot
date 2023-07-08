@@ -12,6 +12,7 @@
 - [快速上手](#快速上手)
 - [安装](#安装)
 - [使用](#使用)
+- [API文档](#API文档)
 - [模型列表](#模型列表)
 - [兼容性](#兼容性)
 - [鸣谢](#鸣谢)
@@ -93,6 +94,10 @@ start();
 
 > 注意：Huggingface 上的部分模型可能会收集你输入的信息，如果你对数据安全有要求，建议不要使用，使用自己搭建的模型是一个更好的选择。
 
+## API文档
+
+参见 [API 文档](./API_CN.md)
+
 ## 模型列表
 
 调用序号 | 类型 | 说明 | 模型
@@ -104,7 +109,7 @@ start();
 4 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
 5 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
 6 | Huggingface Spaces | Vicuna 13b (此模型国内不可访问，请配置代理后使用) | https://chat.lmsys.org/
-7 | Huggingface Spaces | Vicuna GGML 模型，速度较慢，不推荐 | https://huggingface.co/spaces/justest/vicuna-ggml
+7 | Huggingface Spaces | 姜子牙 V1 模型 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
 8 | 魔搭 | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
 9 | 魔搭 | 姜子牙V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
 10 | 魔搭 | 达魔院出品的角色对话机器人 | https://modelscope.cn/studios/damo/role_play_chat/summary
