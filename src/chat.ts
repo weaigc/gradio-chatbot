@@ -1,5 +1,5 @@
-import { NodeHtmlMarkdown } from 'node-html-markdown';
 import type { MergeExclusive } from 'type-fest';
+import TurndownService from 'weaigc-turndown';
 import Debug from 'debug';
 import assert from 'assert';
 import { client } from './client';
@@ -128,7 +128,7 @@ export class GradioChatBot {
   }
 
   private html2Markdown(text: string) {
-    text = this.options.parseHtml ? NodeHtmlMarkdown.translate(text || '') : text;
+    text = this.options.parseHtml ? new TurndownService().turndown(text || '') : text;
     return text?.replace?.(/�/g, '').trim();
   }
 
