@@ -12,6 +12,17 @@ export const generateHash = () => {
   return Math.random().toString(36).substring(2);
 };
 
+const turndownService = new TurndownService({
+  rules: {
+    emphasis: {
+      filter: ['br'],
+      replacement: () => {
+        return '\n';
+      }
+    }
+  }
+});
+
 type GradioAutoOptions = MergeExclusive<{
   url?: string;
 }, {
@@ -128,7 +139,7 @@ export class GradioChatBot {
   }
 
   private html2Markdown(text: string) {
-    text = this.options.parseHtml ? new TurndownService().turndown(text || '') : text;
+    text = this.options.parseHtml ? turndownService.turndown(text || '') : text;
     return text?.replace?.(/�/g, '').trim();
   }
 
