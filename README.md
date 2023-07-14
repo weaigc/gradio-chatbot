@@ -10,6 +10,9 @@ English | [中文](README_CN.md)
 [![Apache 2.0 License](https://img.shields.io/github/license/saltstack/salt)](https://github.com/weaigc/gradio-chatbot/blob/main/license)
 </div>
 
+> Due to the current high demand on the [ChatGPT](https://huggingface.co/spaces/yuntian-deng/ChatGPT) space on Huggingface, there is a noticeable delay in response time. If you have your own ChatGPT account, it is recommended to use [gpt-web](https://github.com/weaigc/gpt-web).
+
+
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Usage](#usage)

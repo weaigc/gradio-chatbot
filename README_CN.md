@@ -9,6 +9,8 @@
 
 </div>
 
+> 由于目前 Huggingface 上的 [ChatGPT](https://huggingface.co/spaces/yuntian-deng/ChatGPT) 空间压力过大，导致调用延时明显变长。如果你有自己的 ChatGPT 账号，推荐使用 [gpt-web](https://github.com/weaigc/gpt-web)。
+
 - [快速上手](#快速上手)
 - [安装](#安装)
 - [使用](#使用)

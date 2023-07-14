@@ -52,7 +52,7 @@ function resolveEndpoint(url: string) {
     const name = RegExp.$2;
     return `https://modelscope.cn/api/v1/studio/${scope}/${name}/gradio`;
   } else if (/^https:\/\/huggingface\.co\/spaces\/([^/]+)\/([^/]+)/.test(url)) {
-    return `${RegExp.$1}-${RegExp.$2}.hf.space`.toLowerCase();
+    return `${RegExp.$1}-${RegExp.$2}.hf.space`.toLowerCase().replace(/_/g, '-');
   } else {
     return uri.host;
   }

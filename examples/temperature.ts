@@ -1,6 +1,9 @@
 import { GradioChatBot } from '../src';
 
-const bot = new GradioChatBot(); // 调用默认模型
+const bot = new GradioChatBot({
+  url: '0', // or 'https://huggingface.co/spaces/yuntian-deng/ChatGPT'
+  args: ["", 1, 0.7, 1, [], null], // 0.7 is the temperature argument
+});
 
 async function start() {
   let index = 0;
