@@ -2,7 +2,7 @@
 
 # Gradio Chatbot
 
-> 一个可以将 [Huggingface Spaces](https://huggingface.co/spaces)、[魔搭创空间](https://www.modelscope.cn/studios) 及 Gradio ChatBot 自动转成免费 API 的 Npm 包。理论上支持所有带 chatbot 的空间，目前完美支持了 [ChatGPT，Vicuna，MPT-30B，Falcon，ChatGLM](#模型列表) 等众多模型空间。
+> 一个可以将 [Huggingface Spaces](https://huggingface.co/spaces)、[魔搭创空间](https://www.modelscope.cn/studios) 及 Gradio ChatBot 自动转成免费 API 的 Npm 包。理论上支持所有带 chatbot 的空间，目前完美支持了 [ChatGPT，GPT4Free，Vicuna，MPT-30B，Falcon，ChatGLM](#模型列表) 等众多模型空间。
 
 [![NPM](https://img.shields.io/npm/v/gradio-chatbot.svg)](https://www.npmjs.com/package/gradio-chatbot)
 [![Apache 2.0 License](https://img.shields.io/github/license/saltstack/salt)](https://github.com/weaigc/gradio-chatbot/blob/main/license)
@@ -17,6 +17,7 @@
 - [API文档](#API文档)
 - [模型列表](#模型列表)
 - [兼容性](#兼容性)
+- [更新日志](#更新日志)
 - [鸣谢](#鸣谢)
 - [License](#license)
 
@@ -105,16 +106,17 @@ start();
 调用序号 | 类型 | 说明 | 模型
 -----|-----|------|-------
 0 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yuntian-deng/ChatGPT
-1 | Huggingface Spaces | MosaicML MPT-30B-Chat | https://huggingface.co/spaces/mosaicml/mpt-30b-chat
-2 | Huggingface Spaces | Falcon Chat | https://huggingface.co/spaces/HuggingFaceH4/falcon-chat
-3 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground
-4 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
-5 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
-6 | Huggingface Spaces | Vicuna 13b (此模型国内不可访问，请配置代理后使用) | https://chat.lmsys.org/
-7 | Huggingface Spaces | 姜子牙 V1 模型 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
-8 | 魔搭 | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
-9 | 魔搭 | 姜子牙V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
-10 | 魔搭 | 达魔院出品的角色对话机器人 | https://modelscope.cn/studios/damo/role_play_chat/summary
+1 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
+2 | Huggingface Spaces | MosaicML MPT-30B-Chat | https://huggingface.co/spaces/mosaicml/mpt-30b-chat
+3 | Huggingface Spaces | Falcon Chat | https://huggingface.co/spaces/HuggingFaceH4/falcon-chat
+4 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground
+5 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
+6 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
+7 | Huggingface Spaces | Vicuna 13b (此模型国内不可访问，请配置代理后使用) | https://chat.lmsys.org/
+8 | Huggingface Spaces | 姜子牙 V1 模型 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
+9 | 魔搭 | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
+10 | 魔搭 | 姜子牙V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
+11 | 魔搭 | 达魔院出品的角色对话机器人 | https://modelscope.cn/studios/damo/role_play_chat/summary
 
 > 国内访问推荐使用魔搭社区提供的模型，访问速度更快更稳定。
 > 更多好用模型欢迎在 [issue](https://github.com/weaigc/gradio-chatbot/issues) 区提交贡献。
@@ -123,6 +125,9 @@ start();
 ## 兼容性
 
 - 此 Npm 包需要 `node >= 18`.
+
+## 更新日志
+查看 [CHANGELOG.md](./CHANGELOG.md)
 
 ## 鸣谢
 
