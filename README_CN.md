@@ -12,6 +12,8 @@
 > 由于目前 Huggingface 上的 [ChatGPT](https://huggingface.co/spaces/yuntian-deng/ChatGPT) 空间压力过大，导致调用延时明显变长。如果你有自己的 ChatGPT 账号，推荐使用 [gpt-web](https://github.com/weaigc/gpt-web)。
 
 - [快速上手](#快速上手)
+  - [NPM](#npm)
+  - [Docker](#docker)
 - [安装](#安装)
 - [使用](#使用)
 - [API文档](#API文档)
@@ -25,12 +27,20 @@
 
 一个命令体验免费的 ChatGPT 聊天机器人。
 
+### NPM
+
 ```bash
 npx gradio-chatbot
 # or
 npm install -g gradio-chatbot
 chatbot
 # 更多用法请输入 chatbot help
+```
+
+### Docker
+```
+docker build . -t gradio-server
+docker run --rm -it -d gradio-server
 ```
 
 [![asciicast](./media/demo.gif)](https://asciinema.org/a/0ki5smP795eyXdXGlx53UDmTB)
@@ -105,8 +115,8 @@ start();
 
 调用序号 | 类型 | 说明 | 模型
 -----|-----|------|-------
-0 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yuntian-deng/ChatGPT
-1 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
+0 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
+1 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yuntian-deng/ChatGPT
 2 | Huggingface Spaces | MosaicML MPT-30B-Chat | https://huggingface.co/spaces/mosaicml/mpt-30b-chat
 3 | Huggingface Spaces | Falcon Chat | https://huggingface.co/spaces/HuggingFaceH4/falcon-chat
 4 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground

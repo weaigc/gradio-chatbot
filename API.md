@@ -12,12 +12,12 @@ const bot = new GradioChatBot(options);
  * url: A string, or an index number of [spaces.json](./src/spaces.json). Indicates the space URL to be docked, defaulting to the first item in [spaces.json](./src/spaces.json).
  * endpoint: Optional. Huggingface space domain name (this domain name must end with `hf.space`).
  * historySize: Optional. A number, indicating the maximum length of the conversation history. Default is `10`.
- * fnIndex: A number, indicating the function index of the Gradio model. Default is `0`.
- * args: An array, indicating the function arguments of the Gradio model. Default is an empty array.
- * inputIndex: A number, indicating the input argument index of the Gradio model. Default is `0`.
- * parseHtml: A boolean value, indicating whether to convert the `html` output by the Gradio model to `markdown`. Default is `true`.
- * session_hash: A string, indicating the unique identifier of the session. Default is a randomly generated hash value.
- * hf_token: A string, indicating the API token of `Hugging Face`. Default is an empty string.
+ * fnIndex: Optional. A number, indicating the function index of the Gradio model.
+ * args: Optional. An array, indicating the function arguments of the Gradio model. Default is an empty array.
+ * inputIndex: Optional. A number, indicating the input argument index of the Gradio model.
+ * parseHtml: Optional. A boolean value, indicating whether to convert the `html` output by the Gradio model to `markdown`. Default is `true`.
+ * session_hash: Optional. A string, indicating the unique identifier of the session. Default is a randomly generated hash value.
+ * hf_token: Optional. A string, indicating the API token of `Hugging Face`. Default is an empty string.
 
 > When `options` is a string, it means the `url` property.
 

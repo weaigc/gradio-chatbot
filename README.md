@@ -15,6 +15,8 @@ English | [中文](README_CN.md)
 
 - [Quick Start](#quick-start)
 - [Installation](#installation)
+  - [NPM](#npm)
+  - [Docker](#docker)
 - [Usage](#usage)
 - [API Document](#api-document)
 - [Model List](#model-list)
@@ -27,6 +29,7 @@ English | [中文](README_CN.md)
 
 Experience a free ChatGPT chatbot with just one command.
 
+### NPM
 ```bash
 npx gradio-chatbot
 # or
@@ -35,6 +38,12 @@ npm install -g gradio-chatbot
 chatbot
 # show help
 chatbot help
+```
+
+### Docker
+```
+docker build . -t gradio-server
+docker run --rm -it -d gradio-server
 ```
 
 [![asciicast](./media/demo.gif)](https://asciinema.org/a/0ki5smP795eyXdXGlx53UDmTB)
@@ -108,8 +117,8 @@ See [API Document](./API.md)
 
 Index | Type | Description | Model
 -----|-----|------|-------
-0 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yuntian-deng/ChatGPT
-1 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
+0 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
+1 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yuntian-deng/ChatGPT
 2 | Huggingface Spaces | MosaicML MPT-30B-Chat | https://huggingface.co/spaces/mosaicml/mpt-30b-chat
 3 | Huggingface Spaces | Falcon Chat | https://huggingface.co/spaces/HuggingFaceH4/falcon-chat
 4 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground

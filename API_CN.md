@@ -12,12 +12,12 @@ const bot = new GradioChatBot(options);
   * url: 一个字符串，也可以是 [spaces.json](./src/spaces.json) 索引号。表示需要对接的空间 URL，默认为 [spaces.json](./src/spaces.json) 里的第一项。
   * endpoint: 可选。Huggingface 空间域名（此，域名必须以 `hf.space` 结尾）。
   * historySize: 可选。一个数字，表示会话历史的最大长度。默认为 `10`。
-  * fnIndex: 一个数字，表示 Gradio 模型的函数索引。默认为 `0`。
-  * args: 一个数组，表示 Gradio 模型的函数参数。默认为空数组。
-  * inputIndex: 一个数字，表示 Gradio 模型的输入参数索引。默认为 `0`。
-  * parseHtml: 一个布尔值，表示是否将Gradio模型输出的 `html` 转为 `markdown`。默认为 `true`。
-  * session_hash: 一个字符串，表示会话的唯一标识。默认为随机生成的哈希值。
-  * hf_token: 一个字符串，表示 `Hugging Face` 的 API 令牌。默认为空字符串。
+  * fnIndex: 可选。一个数字，表示 Gradio 模型的函数索引。。
+  * args: 可选。一个数组，表示 Gradio 模型的函数参数。默认为空数组。
+  * inputIndex: 可选。一个数字，表示 Gradio 模型的输入参数索引。。
+  * parseHtml: 可选。一个布尔值，表示是否将Gradio模型输出的 `html` 转为 `markdown`。默认为 `true`。
+  * session_hash: 可选。一个字符串，表示会话的唯一标识。默认为随机生成的哈希值。
+  * hf_token: 可选。一个字符串，表示 `Hugging Face` 的 API 令牌。默认为空字符串。
 
 > 当 `options` 为字符串时，则表示 `url` 属性。
 
