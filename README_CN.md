@@ -16,7 +16,9 @@
   - [Docker](#docker)
 - [安装](#安装)
 - [使用](#使用)
-- [API文档](#API文档)
+  - [CLI模式](#CLI模式)
+  - [API接口](#API接口)
+  - [API函数](#API函数)
 - [模型列表](#模型列表)
 - [兼容性](#兼容性)
 - [更新日志](#更新日志)
@@ -40,7 +42,7 @@ chatbot
 ### Docker
 ```
 docker build . -t gradio-server
-docker run --rm -it -d gradio-server
+docker run --rm -it -p 8000:8000 gradio-server
 ```
 
 [![asciicast](./media/demo.gif)](https://asciinema.org/a/0ki5smP795eyXdXGlx53UDmTB)
@@ -57,7 +59,26 @@ yarn add gradio-chatbot
 ```
 
 ## 使用
-除了可以在 Cli 中使用外，你还可以自己引入 NPM 包进行二次开发。
+目前支持三种模式。
+
+### CLI模式
+参考 [快速上手](#快速上手)。
+
+### API服务
+为了方便使用，提供了两种形式的接口。
+ * 流式输出，直接访问 http://localhost:8000/api/conversation?model=0&text=hello 即可。
+ * 非流式输出，调用方式同 ChatGPT API。以下为调用示例。
+
+```
+curl http://127.0.0.1:8000/api/conversation \
+  -H "Content-Type: application/json" \
+  -d '{
+     "model": "gpt-3.5-turbo",
+     "messages": [{"role": "user", "content": "hello"}],
+   }'
+```
+
+### API函数
 ```ts
 import { GradioChatBot } from 'gradio-chatbot'
 

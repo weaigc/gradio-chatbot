@@ -18,7 +18,9 @@ English | [中文](README_CN.md)
   - [NPM](#npm)
   - [Docker](#docker)
 - [Usage](#usage)
-- [API Document](#api-document)
+  - [CLI Mode](#cli-mode)
+  - [API Service](#api-service)
+  - [API Function](#api-function)
 - [Model List](#model-list)
 - [Compatibility](#compatibility)
 - [ChangeLog](#change-log)
@@ -43,11 +45,10 @@ chatbot help
 ### Docker
 ```
 docker build . -t gradio-server
-docker run --rm -it -d gradio-server
+docker run --rm -it -p 8000:8000 gradio-server
 ```
 
 [![asciicast](./media/demo.gif)](https://asciinema.org/a/0ki5smP795eyXdXGlx53UDmTB)
-
 
 
 ## Installation
@@ -61,7 +62,18 @@ yarn add gradio-chatbot
 ```
 
 ## Usage
-In addition to using it in the CLI, you can also import the NPM package for further development.
+Currently supports three modes. 
+
+### CLI mode
+Refer to [Quickstart](#Quickstart).
+
+### API Service
+To make it easy to use, two forms of interfaces are provided.
+
+Streaming output, simply visit http://localhost:8000/api/conversation?model=0&text=hello.
+Non-streaming output, the calling method is the same as ChatGPT API. The following is an example of a call.
+
+### API Function
 ```ts
 import { GradioChatBot } from 'gradio-chatbot'
 
