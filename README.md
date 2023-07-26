@@ -2,7 +2,7 @@
 
 # Gradio Chatbot
 
->  An Npm package that can automatically convert [Huggingface Spaces](https://huggingface.co/spaces), [Modelscope Studios](https://www.modelscope.cn/studios) and Gradio ChatBot into free APIs. It basically supports any space with a chatbot, and currently perfectly supports many model spaces such as [ChatGPT, GPT4Free, Vicuna, MPT-30B, Falcon, ChatGLM and so on](#model-list).
+>  An Npm package that can automatically convert [Huggingface Spaces](https://huggingface.co/spaces), [Modelscope Studios](https://www.modelscope.cn/studios) and Gradio ChatBot into free APIs. It basically supports any space with a chatbot, and currently perfectly supports many model spaces such as [GPT4Free, ChatGPT, Llama 2, Vicuna, MPT-30B, Falcon, ChatGLM and so on](#model-list).
 
 English | [中文](README_CN.md)
 
@@ -29,18 +29,25 @@ English | [中文](README_CN.md)
 
 ## Quick Start
 
-Experience a free ChatGPT chatbot with just one command.
-
 ### NPM
+ * Experience a free ChatGPT.
+
 ```bash
 npx gradio-chatbot
 # or
 npm install -g gradio-chatbot
 # call the default model
 chatbot
-# show help
-chatbot help
 ```
+
+* Experience Llama2.
+```bash
+chatbot 2
+# or
+chatbot https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat
+```
+
+> More usage just type `chatbot help`
 
 ### Docker
 ```
@@ -131,16 +138,17 @@ Index | Type | Description | Model
 -----|-----|------|-------
 0 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
 1 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yuntian-deng/ChatGPT
-2 | Huggingface Spaces | MosaicML MPT-30B-Chat | https://huggingface.co/spaces/mosaicml/mpt-30b-chat
-3 | Huggingface Spaces | Falcon Chat | https://huggingface.co/spaces/HuggingFaceH4/falcon-chat
-4 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground
-5 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
-6 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
-7 | Huggingface Spaces | Vicuna 13b | https://chat.lmsys.org/
-8 | Huggingface Spaces | Jiang Ziya V1 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
-9 | ModelScope | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
-10 | ModelScope | Jiang Ziya V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
-11 | ModelScope | Character Dialogue Chatbot developed by Alibaba DAMO Academy | https://modelscope.cn/studios/damo/role_play_chat/summary
+2 | Huggingface Spaces | Llama2 Spaces | https://huggingface.co/spaces/ysharma/Explore_llamav2_with_TGI
+3 | Huggingface Spaces | MosaicML MPT-30B-Chat | https://huggingface.co/spaces/mosaicml/mpt-30b-chat
+4 | Huggingface Spaces | Falcon Chat | https://huggingface.co/spaces/HuggingFaceH4/falcon-chat
+5 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground
+6 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
+7 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
+8 | Huggingface Spaces | Vicuna 13b | https://chat.lmsys.org/
+9 | Huggingface Spaces | Jiang Ziya V1 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
+10 | ModelScope | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
+11 | ModelScope | Jiang Ziya V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
+12 | ModelScope | Character Dialogue Chatbot developed by Alibaba DAMO Academy | https://modelscope.cn/studios/damo/role_play_chat/summary
 
 > More useful models are welcome to contribute in the [issue](https://github.com/weaigc/gradio-chatbot/issues) section. 
 

@@ -47,7 +47,7 @@ function resolveEndpoint(url: string) {
   const uri = new URL(url);
   debug('resolve', uri.hostname);
   if (uri.hostname === 'modelscope.cn') {
-    assert(/^\/studios\/([^/]+)\/([^/]+)\//.test(uri.pathname), 'not a valid modelscope studio url');
+    assert(/^\/studios\/([^/]+)\/([^/]+)/.test(uri.pathname), 'not a valid modelscope studio url');
     const scope = RegExp.$1;
     const name = RegExp.$2;
     return `https://modelscope.cn/api/v1/studio/${scope}/${name}/gradio`;
