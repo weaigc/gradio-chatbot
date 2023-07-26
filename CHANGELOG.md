@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.14 (2023/7/17)
+ - [feature] support browser api
+
+## 0.0.13 (2023/7/17)
+ - [feature] add a build-in model: llama2
+
 ## 0.0.12 (2023/7/17)
  - [feature] support api server
  - [feature] change default model to gpt4free
