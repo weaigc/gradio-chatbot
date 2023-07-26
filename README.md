@@ -2,12 +2,14 @@
 
 # Gradio Chatbot
 
->  An Npm package that can automatically convert [Huggingface Spaces](https://huggingface.co/spaces), [Modelscope Studios](https://www.modelscope.cn/studios) and Gradio ChatBot into free APIs. It basically supports any space with a chatbot, and currently perfectly supports many model spaces such as [GPT4Free, ChatGPT, Llama 2, Vicuna, MPT-30B, Falcon, ChatGLM and so on](#model-list).
+>  A tool that can automatically convert [Huggingface Spaces](https://huggingface.co/spaces), [Modelscope Studios](https://www.modelscope.cn/studios) and Gradio ChatBot into free APIs. It basically supports any space with a chatbot, and currently perfectly supports many model spaces such as [GPT4Free, ChatGPT, Llama 2, Vicuna, MPT-30B, Falcon, ChatGLM and so on](#model-list).
 
 English | [中文](README_CN.md)
 
 [![NPM](https://img.shields.io/npm/v/gradio-chatbot.svg)](https://www.npmjs.com/package/gradio-chatbot)
 [![Apache 2.0 License](https://img.shields.io/github/license/saltstack/salt)](https://github.com/weaigc/gradio-chatbot/blob/main/license)
+
+Online Demo: https://weaigc.github.io/gradio-chatbot
 </div>
 
 > Due to the current high demand on the [ChatGPT](https://huggingface.co/spaces/yuntian-deng/ChatGPT) space on Huggingface, there is a noticeable delay in response time. If you have your own ChatGPT account, it is recommended to use [gpt-web](https://github.com/weaigc/gpt-web).
