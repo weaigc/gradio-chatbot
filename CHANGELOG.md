@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.0.15 (2023/8/4)
+ - [feature] support Qwen 7B Chat
+
 ## 0.0.14 (2023/7/17)
  - [feature] support browser api
 

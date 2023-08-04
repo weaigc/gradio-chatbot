@@ -80,7 +80,7 @@ const findValidSubmitByType = (components: any[], dependencies: any[], type: str
 const findValidSubmitByButton = (components: any[], dependencies: any[]) => {
   const id = components.find(com => com.type === 'button')?.id;
   if (!id) return -1;
-  return dependencies.findIndex(dep => dep.targets?.includes?.(id));
+  return dependencies.findIndex(dep => dep.inputs?.length > 0 && dep.targets?.includes?.(id));
 }
 
 export class GradioChatBot {

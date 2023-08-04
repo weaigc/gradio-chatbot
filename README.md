@@ -148,9 +148,10 @@ Index | Type | Description | Model
 7 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
 8 | Huggingface Spaces | Vicuna 13b | https://chat.lmsys.org/
 9 | Huggingface Spaces | Jiang Ziya V1 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
-10 | ModelScope | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
-11 | ModelScope | Jiang Ziya V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
-12 | ModelScope | Character Dialogue Chatbot developed by Alibaba DAMO Academy | https://modelscope.cn/studios/damo/role_play_chat/summary
+10 | ModelScope | Qwen 7B Chat | https://modelscope.cn/studios/qwen/Qwen-7B-Chat-Demo/summary
+11 | ModelScope | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
+12 | ModelScope | Jiang Ziya V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
+13 | ModelScope | Character Dialogue Chatbot developed by Alibaba DAMO Academy | https://modelscope.cn/studios/damo/role_play_chat/summary
 
 > More useful models are welcome to contribute in the [issue](https://github.com/weaigc/gradio-chatbot/issues) section. 
 
