@@ -14,6 +14,7 @@
   "scripts": {
     "build": "rimraf -rf ./dist && tsc -p ./",
     "test": "tsx ./tests/index",
+    "dev":"tsx ./src/bin/server.ts",
     "debug": "cross-env DEBUG=gradio-chatbot tsx ./src/bin/cli.ts",
     "prepublishOnly": "npm run build"
   },
