@@ -116,6 +116,8 @@ More information: https://github.com/weaigc/gradio-chatbot
         spinner.write(msg.slice(lastLength));
         lastLength = msg.length;
       },
+    }).catch(e => {
+      return `Invoke space error: ${e}`;
     });
     spinner.write(response.slice(lastLength));
     lastLength = 0;

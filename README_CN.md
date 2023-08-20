@@ -153,8 +153,8 @@ start();
 5 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground
 6 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
 7 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
-8 | Huggingface Spaces | Vicuna 13b (此模型国内不可访问，请配置代理后使用) | https://chat.lmsys.org/
-9 | Huggingface Spaces | 姜子牙 V1 模型 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
+8 | Huggingface Spaces | Vicuna (此模型国内不可访问，请配置代理后使用) | https://chat.lmsys.org/
+9 | Huggingface Spaces | 通义千问 7B | https://huggingface.co/spaces/mikeee/qwen-7b-chat
 10 | 魔搭 | 通义千问 | https://modelscope.cn/studios/qwen/Qwen-7B-Chat-Demo/summary
 11 | 魔搭 | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
 12 | 魔搭 | 姜子牙V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary

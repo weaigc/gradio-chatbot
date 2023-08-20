@@ -146,8 +146,8 @@ Index | Type | Description | Model
 5 | Huggingface Spaces | Star Chat | https://huggingface.co/spaces/HuggingFaceH4/starchat-playground
 6 | Huggingface Spaces | ChatGLM2 | https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit
 7 | Huggingface Spaces | ChatGLM | https://huggingface.co/spaces/multimodalart/ChatGLM-6B
-8 | Huggingface Spaces | Vicuna 13b | https://chat.lmsys.org/
-9 | Huggingface Spaces | Jiang Ziya V1 | https://huggingface.co/spaces/IDEA-CCNL/Ziya-v1
+8 | Huggingface Spaces | Vicuna | https://chat.lmsys.org/
+9 | Huggingface Spaces | Qwen 7B Chat | https://huggingface.co/spaces/mikeee/qwen-7b-chat
 10 | ModelScope | Qwen 7B Chat | https://modelscope.cn/studios/qwen/Qwen-7B-Chat-Demo/summary
 11 | ModelScope | ChatGLM2 | https://modelscope.cn/studios/AI-ModelScope/ChatGLM6B-unofficial/summary
 12 | ModelScope | Jiang Ziya V1.1 | https://modelscope.cn/studios/Fengshenbang/Ziya_LLaMA_13B_v1_online/summary
