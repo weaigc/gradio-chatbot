@@ -140,7 +140,7 @@ export class GradioChatBot {
 
   private html2Markdown(text: string) {
     text = this.options.parseHtml ? turndownService.turndown(text || '') : text;
-    return text?.replace?.(/�/g, '').trim();
+    return text?.replace?.(/�/g, '').trim().replace(/▌$/, '');
   }
 
   async reset() {
