@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.17 (2023/8/20)
+ - [chore] replace internal model 9 to Qwen 7B Chat
+ - [fix] Fix the issue of abnormal output of model 8
+
 ## 0.0.15 (2023/8/4)
  - [feature] support Qwen 7B Chat
 
