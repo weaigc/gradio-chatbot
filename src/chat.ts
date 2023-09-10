@@ -89,9 +89,10 @@ export class GradioChatBot {
   session_hash: string;
   private instance_map: any;
   constructor(opts: string | GradioAutoOptions = '0') {
-    if (typeof opts === 'string') {
-      this.options =  { url: opts };
+    if (['string', 'number'].includes(typeof opts)) {
+      this.options =  { url: String(opts) };
     } else {
+      // @ts-ignore
       this.options = opts;
     }
     assert(this.options.endpoint || this.options.url, 'endpoint and url must specify one of them');
