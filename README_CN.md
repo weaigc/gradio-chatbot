@@ -19,6 +19,8 @@
   - [CLI模式](#CLI模式)
   - [API接口](#API接口)
   - [API函数](#API函数)
+  - [OpenAI](#使用-openai-调用)
+- [API文档](#API文档)
 - [模型列表](#模型列表)
 - [兼容性](#兼容性)
 - [更新日志](#更新日志)
@@ -136,6 +138,44 @@ start();
 更多示例请前往目录: [Examples](./examples/)
 
 > 注意：Huggingface 上的部分模型可能会收集你输入的信息，如果你对数据安全有要求，建议不要使用，使用自己搭建的模型是一个更好的选择。
+
+### 使用 OpenAI 调用
+#### Python
+```
+import openai
+openai.api_key = "dummy"
+openai.api_base = "http://127.0.0.1:8080/v1"
+
+# create a chat completion
+chat_completion = openai.ChatCompletion.create(model="10", messages=[{"role": "user", "content": "Hello"}])
+
+# print the completion
+print(chat_completion.choices[0].message.content)
+```
+> 更多使用说明参考 https://github.com/openai/openai-python
+
+#### Node.js
+```
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  baseURL: 'http://127.0.0.1:8080/v1'
+});
+
+async function main() {
+  const stream = await openai.chat.completions.create({
+    model: '10',
+    messages: [{ role: 'user', content: 'Hello' }],
+    stream: true,
+  });
+  for await (const part of stream) {
+    process.stdout.write(part.choices[0]?.delta?.content || '');
+  }
+}
+
+main();
+```
+> 更多使用说明参考 https://github.com/openai/openai-node
 
 ## API文档
 

@@ -23,6 +23,8 @@ Online Demo: https://weaigc.github.io/gradio-chatbot
   - [CLI Mode](#cli-mode)
   - [API Service](#api-service)
   - [API Function](#api-function)
+  - [OpenAI](#using-openai)
+- [API Docs](#api-document)
 - [Model List](#model-list)
 - [Compatibility](#compatibility)
 - [ChangeLog](#change-log)
@@ -129,6 +131,44 @@ start();
 For more examples, please visit the directory: [Examples](./examples/) .
 
 > Note: Some models on Hugging Face may collect the information you input. If you have data security concerns, it is recommended not to use them, and using self-hosted models is a better choice.
+
+### Using OpenAI
+#### Python
+```
+import openai
+openai.api_key = "dummy"
+openai.api_base = "http://127.0.0.1:8080/v1"
+
+# create a chat completion
+chat_completion = openai.ChatCompletion.create(model="10", messages=[{"role": "user", "content": "Hello"}])
+
+# print the completion
+print(chat_completion.choices[0].message.content)
+```
+> For more usage instructions, please refer to https://github.com/openai/openai-python
+
+#### Node.js
+```
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  baseURL: 'http://127.0.0.1:8080/v1'
+});
+
+async function main() {
+  const stream = await openai.chat.completions.create({
+    model: '10',
+    messages: [{ role: 'user', content: 'Hello' }],
+    stream: true,
+  });
+  for await (const part of stream) {
+    process.stdout.write(part.choices[0]?.delta?.content || '');
+  }
+}
+
+main();
+```
+> For more usage instructions, please refer to https://github.com/openai/openai-node
 
 ## API Document
 

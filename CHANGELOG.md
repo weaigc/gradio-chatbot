@@ -1,4 +1,6 @@
 # Change Log
+## 0.0.21(2023/9/14)
+ - [feature] Support using openai calls
 
 ## 0.0.17 (2023/8/20)
  - [chore] replace internal model 9 to Qwen 7B Chat

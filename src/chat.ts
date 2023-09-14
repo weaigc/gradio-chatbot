@@ -32,6 +32,7 @@ type GradioAutoOptions = MergeExclusive<{
   fnIndex?: number;
   args?: unknown[];
   inputIndex?: number;
+  historyIndex?: number;
   parseHtml?: boolean;
   session_hash?: string;
   hf_token?: string;
@@ -85,7 +86,8 @@ const findValidSubmitByButton = (components: any[], dependencies: any[]) => {
 
 export class GradioChatBot {
   private options: GradioAutoOptions;
-  history: any[] = [];
+  history: [string, string][] = [];
+  historyComponentId: number;
   session_hash: string;
   private instance_map: any;
   constructor(opts: string | GradioAutoOptions = '0') {
@@ -108,6 +110,7 @@ export class GradioChatBot {
 
     if (!this.options.endpoint) {
       this.options.endpoint = resolveEndpoint(this.options.url!)
+      debug('endpoint', this.options.endpoint)
     }
     this.session_hash = this.options.session_hash || generateHash();
     if (!this.options.historySize) {
@@ -132,11 +135,12 @@ export class GradioChatBot {
           && (com.type === 'textbox' || com.example_input)
         ));
     }
-  
+    const historyComponentId = this.historyComponentId || components?.find((com: any) => com.type === 'chatbot')?.id
+
     assert(textInputIndex > -1, 'Cannot find the input box');
 
     debug('inputIndex', textInputIndex);
-    return [inputs, textInputIndex];
+    return [inputs, textInputIndex, submitFn?.inputs.indexOf(historyComponentId)];
   }
 
   private html2Markdown(text: string) {
@@ -174,15 +178,19 @@ export class GradioChatBot {
         }
         assert(fnIndex !== -1, 'Failed to parse this space, you may need to specify the fnIndex manually!');
 
-        let [inps, inpIndex] = this.parseInputs(fnIndex, app.config);
+        let [inps, inpIndex, hisIndex] = this.parseInputs(fnIndex, app.config);
 
         if (!args?.length) {
           args = inps;
         }
-        let inputIndex = this.options.inputIndex ?? inpIndex;
+        let { inputIndex = inpIndex, historyIndex = hisIndex } = this.options;
 
         if (inputIndex > -1) {
           args[inputIndex] = input;
+        }
+
+        if (historyIndex > -1) {
+          args[historyIndex] = this.history
         }
 
         debug('args', fnIndex, JSON.stringify(args));
@@ -217,6 +225,7 @@ export class GradioChatBot {
               }
               if (output.type === 'chatbot' && value) {
                 this.history = value.slice(-this.options.historySize);
+                this.historyComponentId = output.id
                 output.props.value = this.history;
                 const message = value?.at(-1)?.at(-1);
                 options?.onMessage?.(this.html2Markdown(message));

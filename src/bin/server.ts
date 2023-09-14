@@ -2,7 +2,7 @@
 
 import express from 'express';
 import assert from 'assert';
-import { GradioChatBot, generateHash } from '../';
+import { GradioChatBot } from '../';
 
 export type Role = 'user' | 'assistant' | 'system'
 export type Action = 'next' | 'variant';
@@ -16,6 +16,7 @@ export interface APIRequest {
   model: string
   action: Action
   messages: APIMessage[]
+  stream?: boolean
 }
 
 export interface APIResponse {
@@ -33,7 +34,7 @@ app.use(express.json());
 function parseOpenAIMessage(request: APIRequest) {
   const history: [string, string][] = [];
   request.messages?.forEach((message) => {
-    if (message.role === 'assistant' || message.role === 'user') {
+    if (message.role === 'user') {
       history.push([message.content, '']);
     } else if (history.length) {
       history.at(-1)[1] = message.content;
@@ -43,6 +44,7 @@ function parseOpenAIMessage(request: APIRequest) {
     history,
     prompt: request.messages?.reverse().find((message) => message.role === 'user')?.content,
     model: request.model,
+    stream: request.stream,
   };
 }
 
@@ -61,28 +63,59 @@ function responseOpenAIMessage(content: string, input?: string): APIResponse {
 }
 
 app.post(['/', '/api/conversation'], async (req, res) => {
-  const { prompt, model, history } = parseOpenAIMessage(req.body);
+  const { prompt, model, history, stream } = parseOpenAIMessage(req.body);
   const chatbot = new GradioChatBot({
     url: model,
     historySize: 20,
   });
   chatbot.history = history;
-  const isStream = req.headers.accept?.includes('text/event-stream');
+  const isStream = stream || req.headers.accept?.includes('text/event-stream');
   if (isStream) {
     res.set('Content-Type', 'text/event-stream; charset=utf-8');
   }
   assert(prompt, 'messages can\'t be empty!');
+  let lastLength = 0;
   const content = await chatbot.chat(prompt, {
     onMessage(msg) {
       if (isStream) {
-        res.write(`data: ${JSON.stringify(responseOpenAIMessage(msg))}\n`);
+        res.write(`data: ${JSON.stringify(responseOpenAIMessage(msg.slice(lastLength)))}\n`);
+        lastLength = msg.length
       }
     }
   });
-  const response = responseOpenAIMessage(content);
   if (isStream) {
     res.write(`data: [DONE]`);
   } else {
+    const response = responseOpenAIMessage(content);
+    res.json(response);
+  }
+});
+
+app.post(['/v1/chat/completions'], async (req, res) => {
+  const { prompt, model, history, stream } = parseOpenAIMessage(req.body);
+  const chatbot = new GradioChatBot({
+    url: model,
+    historySize: 20,
+  });
+  chatbot.history = history;
+  const isStream = stream || req.headers.accept?.includes('text/event-stream');
+  if (isStream) {
+    res.set('Content-Type', 'text/event-stream; charset=utf-8');
+  }
+  let lastLength = 0;
+  assert(prompt, 'messages can\'t be empty!');
+  const content = await chatbot.chat(prompt, {
+    onMessage(msg) {
+      if (isStream) {
+        res.write(`data: ${JSON.stringify(responseOpenAIMessage(msg.slice(lastLength)))}\n`);
+        lastLength = msg.length;
+      }
+    }
+  });
+  if (isStream) {
+    res.end(`data: [DONE]`);
+  } else {
+    const response = responseOpenAIMessage(content);
     res.json(response);
   }
 });
