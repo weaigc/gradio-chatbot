@@ -3,6 +3,7 @@
 import express from 'express';
 import cors from 'cors'
 import assert from 'assert';
+import 'express-async-errors';
 import { GradioChatBot } from '../';
 
 export type Role = 'user' | 'assistant' | 'system'
@@ -32,6 +33,11 @@ const PORT = isNaN(parseInt(process.env.PORT, 10)) ? 8000 : parseInt(process.env
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(function (err, req, res, next) {
+  res
+    .status(err.status || 500)
+    .send({ message: err.message, stack: err.stack });
+});
 
 function parseOpenAIMessage(request: APIRequest) {
   const history: [string, string][] = [];
@@ -156,11 +162,12 @@ app.listen(Math.max(Math.min(65535, PORT), 80), '0.0.0.0');
 console.log(`\nServer start successful, serve link: http://localhost:${PORT}/api/conversation?text=hello\n`);
 
 /**
-curl http://127.0.0.1:8000/api/conversation \
-  -H "accept: text/event-stream"
+
+curl http://127.0.0.1:8000/api/completions \
+  -H "accept: text/event-stream" \
   -H "Content-Type: application/json" \
   -d '{
-     "model": "https://huggingface.co/spaces/mikeee/chatglm2-6b-4bit",
-     "messages": [{"role": "user", "content": "hello"}],
+     "model": "gpt-3.5",
+     "messages": [{"role": "user", "content": "hello"}]
    }'
  */

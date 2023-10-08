@@ -178,8 +178,8 @@ See [API Document](./API.md)
 
 Index | Type | Description | Model
 -----|-----|------|-------
-0 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
-1 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yuntian-deng/ChatGPT
+0 | Huggingface Spaces | ChatGPT | https://huggingface.co/spaces/yizhangliu/chatGPT
+1 | Huggingface Spaces | GPT Free | https://huggingface.co/spaces/justest/gpt4free
 2 | Huggingface Spaces | Llama2 Spaces | https://huggingface.co/spaces/ysharma/Explore_llamav2_with_TGI
 3 | Huggingface Spaces | MosaicML MPT-30B-Chat | https://huggingface.co/spaces/mosaicml/mpt-30b-chat
 4 | Huggingface Spaces | Falcon Chat | https://huggingface.co/spaces/HuggingFaceH4/falcon-chat
