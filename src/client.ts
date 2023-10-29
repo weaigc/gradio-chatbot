@@ -233,7 +233,6 @@ export async function client(
 
 		const { ws_protocol, http_protocol, host, space_id } =
 			await process_endpoint(app_reference, hf_token);
-
 		// const session_hash = Math.random().toString(36).substring(2);
 		const last_status: Record<string, Status["stage"]> = {};
 		let config: Config;

@@ -33,7 +33,7 @@ export function determine_protocol(endpoint: string): {
 
 export const RE_SPACE_NAME = /^[^\/]*\/[^\/]*$/;
 export const RE_SPACE_DOMAIN = /.*hf\.space\/{0,1}$/;
-export const MD_SPACE_DOMAIN = /^https:\/\/modelscope\.cn\//;
+export const MD_SPACE_DOMAIN = /^https:\/\/(www\.)?modelscope\.cn\//;
 export async function process_endpoint(
 	app_reference: string,
 	token?: `hf_${string}`

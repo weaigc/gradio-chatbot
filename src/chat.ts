@@ -47,11 +47,11 @@ function resolveEndpoint(url: string) {
   debug('url', url);
   const uri = new URL(url);
   debug('resolve', uri.hostname);
-  if (uri.hostname === 'modelscope.cn') {
+  if (uri.hostname.endsWith('modelscope.cn')) {
     assert(/^\/studios\/([^/]+)\/([^/]+)/.test(uri.pathname), 'not a valid modelscope studio url');
     const scope = RegExp.$1;
     const name = RegExp.$2;
-    return `https://modelscope.cn/api/v1/studio/${scope}/${name}/gradio`;
+    return `https://${uri.hostname}/api/v1/studio/${scope}/${name}/gradio`;
   } else if (/^https:\/\/huggingface\.co\/spaces\/([^/]+)\/([^/]+)/.test(url)) {
     return `${RegExp.$1}-${RegExp.$2}.hf.space`.toLowerCase().replace(/_/g, '-');
   } else {
@@ -175,6 +175,9 @@ export class GradioChatBot {
         fnIndex = fnIndex ?? findValidSubmitByType(components, dependencies, 'submit');
         if (fnIndex < 0) {
           fnIndex = Math.max(findValidSubmitByButton(components, dependencies), findValidSubmitByType(components, dependencies, 'click'));
+        }
+        if (fnIndex < 0) {
+          fnIndex = Math.max(findValidSubmitByType(components, dependencies, 'chatbot'), 0);
         }
         assert(fnIndex !== -1, 'Failed to parse this space, you may need to specify the fnIndex manually!');
 
