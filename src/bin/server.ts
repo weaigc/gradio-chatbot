@@ -17,15 +17,23 @@ export interface APIMessage {
 export interface APIRequest {
   model: string
   action: Action
+  prompt?: string | string[]
   messages: APIMessage[]
   stream?: boolean
 }
 
 export interface APIResponse {
   whisper?: string
+  usage?: {
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
+  }
   choices: {
+    text: string
     delta?: APIMessage
     message: APIMessage
+    finish_reason?: string
   }[]
 }
 
@@ -48,30 +56,44 @@ function parseOpenAIMessage(request: APIRequest) {
       history.at(-1)[1] = message.content;
     }
   })
+  const prompts = [request.messages?.reverse().find((message) => message.role === 'user')?.content];
+  if (typeof request.prompt === 'string') {
+    prompts.push(request.prompt);
+  } else if (Array.isArray(request.prompt)) {
+    prompts.push(...request.prompt);
+  }
   return {
     history,
-    prompt: request.messages?.reverse().find((message) => message.role === 'user')?.content,
+    prompt: prompts.filter(Boolean).join('\n'),
     model: request.model,
     stream: request.stream,
   };
 }
 
-function responseOpenAIMessage(content: string, input?: string): APIResponse {
+function responseOpenAIMessage(content: string, input: string, finish_reason = null): APIResponse {
   const message: APIMessage = {
     role: 'assistant',
     content,
   };
   return {
     whisper: input,
+    usage: {
+      prompt_tokens: input.length,
+      completion_tokens: content.length,
+      total_tokens: 100000000,
+    },
     choices: [{
       delta: message,
       message,
+      finish_reason,
+      text: content,
     }],
   };
 }
 
 app.post(['/', '/api/conversation'], async (req, res) => {
   const { prompt, model, history, stream } = parseOpenAIMessage(req.body);
+
   const chatbot = new GradioChatBot({
     url: model,
     historySize: 20,
@@ -86,7 +108,7 @@ app.post(['/', '/api/conversation'], async (req, res) => {
   const content = await chatbot.chat(prompt, {
     onMessage(msg) {
       if (isStream) {
-        res.write(`data: ${JSON.stringify(responseOpenAIMessage(msg.slice(lastLength)))}\n\n`);
+        res.write(`data: ${JSON.stringify(responseOpenAIMessage(msg.slice(lastLength), prompt))}\n\n`);
         lastLength = msg.length
       }
     }
@@ -97,7 +119,7 @@ app.post(['/', '/api/conversation'], async (req, res) => {
   if (isStream) {
     res.write(`data: [DONE]\n\n`);
   } else {
-    const response = responseOpenAIMessage(content);
+    const response = responseOpenAIMessage(content, prompt, 'stop');
     res.json(response);
   }
 });
@@ -118,7 +140,7 @@ app.post(/.*\/completions$/, async (req, res) => {
   const content = await chatbot.chat(prompt, {
     onMessage(msg) {
       if (isStream) {
-        res.write(`data: ${JSON.stringify(responseOpenAIMessage(msg.slice(lastLength)))}\n\n`);
+        res.write(`data: ${JSON.stringify(responseOpenAIMessage(msg.slice(lastLength), prompt))}\n\n`);
         lastLength = msg.length;
       }
     }
@@ -129,7 +151,7 @@ app.post(/.*\/completions$/, async (req, res) => {
   if (isStream) {
     res.end(`data: [DONE]\n\n`);
   } else {
-    const response = responseOpenAIMessage(content);
+    const response = responseOpenAIMessage(content, prompt, 'stop');
     res.json(response);
   }
 });
